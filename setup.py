@@ -10,7 +10,7 @@ from setuptools import setup
 APP = ['PMA-Convert.py']
 DATA_FILES = ['--iconfile']
 OPTIONS = {'argv_emulation': True,
- 'iconfile': '/Users/joeflack4/projects/PMA-Convert/favicon.png.icns'}
+ 'iconfile': '/Users/joeflack4/projects/PMA-Convert/favicon.icns'}
 
 setup(
     app=APP,

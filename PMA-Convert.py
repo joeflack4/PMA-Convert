@@ -1,7 +1,7 @@
 # Python 3
 # from tkinter import Frame, Tk, Label, Button, filedialog, W, SUNKEN, X
 # Python 2
-from Tkinter import Frame, Tk, Label, Button, W, SUNKEN, X
+from Tkinter import Frame, Tk, Label, Button, W, SUNKEN, X, Text
 import tkFileDialog
 
 # - Note: Will re-import when status bar is working again.
@@ -96,7 +96,7 @@ class PmaConvert:
                 rc = p.returncode
                 self.log_text(str(rc))
                 self.log_text(str(err))
-                # self.log_text(str(output))
+                self.log_text(str(output))
 
 
                 # call(self.run_conversion(version, f), shell=True)
@@ -141,7 +141,6 @@ if __name__ == '__main__':
 
 # Tasks
 # - High Priority
-# TODO: Get conversion working.
 # TODO: Get feedback in log when conversion is sucessful. This may require some work with qtools2, or otherwise find a way to get info from the console.
 # TODO: Log needs to have fixed width.
 # TODO: May be able to try multiple versions of python by checking the return code. And only return log text if conversion was successful.
