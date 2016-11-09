@@ -72,50 +72,23 @@ class PmaConvert:
             self.is_converting = True
             self.log_text('Converting...')
 
-            # This is a test. Move into if statement afterwards.
-            # f = '/Users/joeflack4/Desktop/KER5-Household-Questionnaire-v12-jef.xls'
             f = self.file_selection
-
-            # Note: May be best to avoid 'call' and use python 2.
             versions = ['python', 'python2', 'python27']
 
-            # Testing alternative to call()
-            # from qtools2 import convert as qtools_convert
-            # from subprocess import call
             from subprocess import Popen, PIPE
 
             for version in versions:
                 command_args = [version, '-m', 'qtools2.convert', '-v2']
                 for file in f:
                     command_args.append(str(file))
-                # command_args =[version, '-m',  'qtools2.convert',  '-v2', '/Users/joeflack4/Desktop/KER5-Female-Questionnaire-v12-jef.xls', '/Users/joeflack4/Desktop/KER5-Household-Questionnaire-v12-jef.xls']
                 p = Popen(command_args, stdin=PIPE, stdout=PIPE, stderr=PIPE)
-                # p = Popen([version, ' -m qtools2.convert -v2 ' + '/Users/joeflack4/Desktop/KER5-Female-Questionnaire-v12-jef.xls /Users/joeflack4/Desktop/KER5-Household-Questionnaire-v12-jef.xls'],
-                #           stdin=PIPE, stdout=PIPE, stderr=PIPE)
                 output, err = p.communicate(b"input data that is passed to subprocess' stdin")
                 rc = p.returncode
+                # TODO: Improve logging.
+                # TODO: If return code is success, break the loop.
                 self.log_text(str(rc))
                 self.log_text(str(err))
                 self.log_text(str(output))
-
-
-                # call(self.run_qtools2_conversion(version, f), shell=True)
-
-            # call(self.run_qtools2_conversion('python27', f), shell=True)
-            # call(self.run_qtools2_conversion('python2', f), shell=True)
-            # call(self.run_qtools2_conversion('python', f), shell=True)
-            # TODO: This error handling needs fixing. It's not working at the moment because no error is registered, as a separate process is being run. Need a way to either get feedback from that process, or otherwise try another route perhaps. Maybe check using OS to see if an .xml file appeared.
-            # TODO: Also have any errors display in the log.
-            # try:
-            #     call(self.run_qtools2_conversion('python27', f), shell=True)
-            # except:
-            #     try:
-            #         call(self.run_qtools2_conversion('python2', f), shell=True)
-            #     except:
-            #         try:
-            #             call(self.run_qtools2_conversion('python', f), shell=True)
-            #         except:
-            #             self.log_text('Unexpected conversion error. Please contact your administrator.')
 
     def run_qtools2_conversion(self, python_version, files):
         # TODO: Restore this when ready. But also need to break up this tuple first.
@@ -144,18 +117,29 @@ if __name__ == '__main__':
 
 # Tasks
 # - High Priority
+# TODO: Change API to call qtools directly. Set conditional to run subprocess if needed.
+# Log
 # TODO: Get feedback in log when conversion is sucessful. This may require some work with qtools2, or otherwise find a way to get info from the console.
 # TODO: Log needs to have fixed width.
-# TODO: May be able to try multiple versions of python by checking the return code. And only return log text if conversion was successful.
-# TODO: Need to reset window as well after giving feedback.
-# TODO: Get it to run by double clicking, or opening with python, but without opening external windows.
+# UI
+# TODO: Fix positioning issues (fill, anchor, expand, etc), or use grid instead.
+# Window
+# TODO: Need to reset window as well after log gives its feedback.
 # - Medium Priority
-# TODO: Might want to add some options.
+# Options
+# TODO: Might want to add some conversion options.
+# Dependency Hell
 # TODO: Alert on load if dependencies do not exist (try/except, perhaps)
-# TODO: Make an installer.
+# TODO: Make installers.
+# TODO: Make standalone .app and .exe files.
 # - Low Prioirity
+# Misc
 # TODO: Position in middle of screen on load.
 # TODO: Have in focus in front on load.
-# TODO: Fix positioning issues (fill, anchor, expand, etc), or use grid instead.
-# TODO: Add a dynamic cancel button.
+# TODO: Add a cancel button that dynamically appears if conversion is in-process.
 # TODO: Add an error alert / message when buttons are clicked, but have been disabled.
+# Subprocess
+# TODO: May be able to try multiple versions of python by checking the return code. And only return log text if conversion was successful.
+
+# Optional Future Development
+# - Change the way PMA Convert is used as a submodule. http://stackoverflow.com/questions/4161022/git-how-to-track-untracked-content
