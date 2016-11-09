@@ -99,25 +99,25 @@ class PmaConvert:
                 self.log_text(str(output))
 
 
-                # call(self.run_conversion(version, f), shell=True)
+                # call(self.run_qtools2_conversion(version, f), shell=True)
 
-            # call(self.run_conversion('python27', f), shell=True)
-            # call(self.run_conversion('python2', f), shell=True)
-            # call(self.run_conversion('python', f), shell=True)
+            # call(self.run_qtools2_conversion('python27', f), shell=True)
+            # call(self.run_qtools2_conversion('python2', f), shell=True)
+            # call(self.run_qtools2_conversion('python', f), shell=True)
             # TODO: This error handling needs fixing. It's not working at the moment because no error is registered, as a separate process is being run. Need a way to either get feedback from that process, or otherwise try another route perhaps. Maybe check using OS to see if an .xml file appeared.
             # TODO: Also have any errors display in the log.
             # try:
-            #     call(self.run_conversion('python27', f), shell=True)
+            #     call(self.run_qtools2_conversion('python27', f), shell=True)
             # except:
             #     try:
-            #         call(self.run_conversion('python2', f), shell=True)
+            #         call(self.run_qtools2_conversion('python2', f), shell=True)
             #     except:
             #         try:
-            #             call(self.run_conversion('python', f), shell=True)
+            #             call(self.run_qtools2_conversion('python', f), shell=True)
             #         except:
             #             self.log_text('Unexpected conversion error. Please contact your administrator.')
 
-    def run_conversion(self, python_version, files):
+    def run_qtools2_conversion(self, python_version, files):
         # TODO: Restore this when ready. But also need to break up this tuple first.
         # command = python_version + ' -m qtools2.convert -v2 ' + str(files)
         f = ''
@@ -127,8 +127,11 @@ class PmaConvert:
         # command = python_version + ' -m qtools2.convert -v2 ' + '/Users/joeflack4/Desktop/KER5-Female-Questionnaire-v12-jef.xls /Users/joeflack4/Desktop/KER5-Household-Questionnaire-v12-jef.xls'
         return command
 
+def run_conversion():
+    PmaConvert(Tk())
+
 if __name__ == '__main__':
-    pma_convert = PmaConvert(Tk())
+    run_conversion()
 
     # TESTING - anchor, fill, expand still not working.
     # root = Tk()
