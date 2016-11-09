@@ -3,7 +3,8 @@ from tkinter import Frame, Tk, Label, Button, filedialog, W, SUNKEN, X
 # from tkinter import BOTTOM
 #  - Experimentation:
 # from tkinter import Frame, Tk, Label, Entry, Button, BOTH, Text, Menu, END, filedialog
-
+# from qtools2 import convert as qtools_convert
+from subprocess import call
 
 
 class PmaConvert:
@@ -52,18 +53,50 @@ class PmaConvert:
                                                         message='Open one or more files', multiple=1)
             if self.file_selection != '':
                 self.set_status('Click on Convert to convert files.')
-                self.log.configure(text='File(s) ready for conversion: '+str(self.file_selection))
+                log_output = 'File(s) ready for conversion: ' + str(self.file_selection)
+                self.log.configure(text=log_output)
+                print(log_output)
 
     def set_status(self, newStatus):
         self.status_bar.configure(text=newStatus)
 
-    def logText(self, newText):
+    def log_text(self, newText):
         self.log.configure(text=self.log['text'] + '\n' + newText)
 
     def convert(self):
         if self.file_selection != '' and self.is_converting == False:
             self.is_converting = True
-            self.logText('Converting...')
+            self.log_text('Converting...')
+
+            # This is a test. Move into if statement afterwards.
+            # f = '/Users/joeflack4/Desktop/KER5-Household-Questionnaire-v12-jef.xls'
+            f = self.file_selection
+
+            # Note: May be best to avoid 'call' and use python 2.
+            versions = ['python', 'python2', 'python27']
+            for version in versions:
+                call(self.run_conversion(version, f), shell=True)
+            # call(self.run_conversion('python27', f), shell=True)
+            # call(self.run_conversion('python2', f), shell=True)
+            # call(self.run_conversion('python', f), shell=True)
+            # TODO: This error handling needs fixing. It's not working at the moment because no error is registered, as a separate process is being run. Need a way to either get feedback from that process, or otherwise try another route perhaps. Maybe check using OS to see if an .xml file appeared.
+            # TODO: Also have any errors display in the log.
+            # try:
+            #     call(self.run_conversion('python27', f), shell=True)
+            # except:
+            #     try:
+            #         call(self.run_conversion('python2', f), shell=True)
+            #     except:
+            #         try:
+            #             call(self.run_conversion('python', f), shell=True)
+            #         except:
+            #             self.log_text('Unexpected conversion error. Please contact your administrator.')
+
+    def run_conversion(self, python_version, files):
+        # TODO: Restore this when ready. But also need to break up this tuple first.
+        # command = python_version + ' -m qtools2.convert -v2 ' + str(files)
+        command = python_version + ' -m qtools2.convert -v2 ' + '/Users/joeflack4/Desktop/KER5-Female-Questionnaire-v12-jef.xls'
+        return command
 
 if __name__ == '__main__':
     pma_convert = PmaConvert(Tk())
