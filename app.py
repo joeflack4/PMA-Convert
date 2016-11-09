@@ -146,6 +146,7 @@ if __name__ == '__main__':
 # TODO: Log needs to have fixed width.
 # TODO: May be able to try multiple versions of python by checking the return code. And only return log text if conversion was successful.
 # TODO: Need to reset window as well after giving feedback.
+# TODO: Get it to run by double clicking, or opening with python, but without opening external windows.
 # - Medium Priority
 # TODO: Might want to add some options.
 # TODO: Alert on load if dependencies do not exist (try/except, perhaps)
